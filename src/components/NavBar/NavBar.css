@@ -1,0 +1,28 @@
+.navbar {
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    padding: 0 10px;
+    width: 100%;
+}
+
+.navbar .navbar-menu {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 11px;
+    padding-bottom: 13px;
+    background-color: #fff;
+}
+
+.navbar .navbar-menu #logo > a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+}
+
+.navbar .navbar-menu .social {
+    margin-right: 15px;
+}

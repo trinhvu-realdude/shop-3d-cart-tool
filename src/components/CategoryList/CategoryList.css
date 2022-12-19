@@ -1,0 +1,42 @@
+.navbar .navbar-menu #categories button {
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    border: 0;
+    color: #4d4a4a;
+    background-color: #fff;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.navbar .navbar-menu #categories button:hover {
+    background-color: wheat;
+    text-decoration: underline;
+}
+
+.navbar .navbar-menu #categories .cat-list {
+    display: block;
+    position: absolute;
+    right: 50px;
+    top: 55px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    padding: 10px;
+    column-count: 2;
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+}
+
+.navbar .navbar-menu #categories .cat-list .category {
+    width: 140px;
+}
+
+.navbar .navbar-menu #categories .cat-list .category > a {
+    text-decoration: none;
+    color: #000;
+    margin: 10px;
+}
+
+.navbar .navbar-menu #categories .cat-list .category > a:hover {
+    text-decoration: underline;
+}

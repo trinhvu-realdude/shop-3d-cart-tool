@@ -1,0 +1,18 @@
+.content-container {
+    display: block;
+    width: 100%;
+}
+
+.content-container .content-title {
+    text-align: center;
+    min-height: 1rem;
+    margin-top: -10px;
+}
+
+.content-container .content-title .heading {
+    font-size: 30px;
+}
+
+.content-container .content-title .description {
+    padding: 0 10px;
+}
