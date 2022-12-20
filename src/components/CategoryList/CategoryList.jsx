@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./CategoryList.css";
 
 function CategoryList() {
@@ -35,9 +36,16 @@ function CategoryList() {
                     categoryList && categoryList.length > 0
                     ? categoryList.map((category, index) => (
                         <div className="category" key={index}>
-                            <a href={category.url}>
+                            {/* <a href={category.url}>
                                 {category.icon} {category.name}
-                            </a>
+                                
+                            </a> */}
+                            <Link 
+                                className="cat-link"
+                                to={category.url}
+                            >
+                                {category.icon} {category.name}
+                            </Link>
                         </div>
                     )) : null
                 }
