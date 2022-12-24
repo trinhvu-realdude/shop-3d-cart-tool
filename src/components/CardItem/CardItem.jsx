@@ -3,9 +3,9 @@ import "./CardItem.css"
 function CardItem(props) {
     return (
         <div className="card-item">
-            <a href={props.tagImage.url} title={props.tagImage.title}>
+            <a href={props.tagImage.category + props.tagImage.url + `/${props.tagImage.folderName}`} title={props.tagImage.title}>
                 <img 
-                    src={props.tagImage.thumbSource} 
+                    src={props.tagImage.thumbSource}
                     alt={props.tagImage.title} 
                     style={{
                         borderRadius: "10px",

@@ -31,22 +31,12 @@
     width: 140px;
 }
 
-/* .navbar .navbar-menu #categories .cat-list .category > a {
+.navbar .navbar-menu #categories .cat-list .category > a {
     text-decoration: none;
     color: #000;
     margin: 10px;
 }
 
 .navbar .navbar-menu #categories .cat-list .category > a:hover {
-    text-decoration: underline;
-} */
-
-.navbar .navbar-menu #categories .cat-list .category > .cat-link {
-    text-decoration: none;
-    color: #000;
-    margin: 10px;
-}
-
-.navbar .navbar-menu #categories .cat-list .category > .cat-link:hover {
     text-decoration: underline;
 }

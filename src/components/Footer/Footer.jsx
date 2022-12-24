@@ -29,10 +29,10 @@ function Footer() {
                 </div>
                 <div className="content-list">
                     <ul>
-                        <li><a href="/#">About us</a></li>
-                        <li><a href="/#">Contact</a></li>
-                        <li><a href="/#">Terms of Use</a></li>
-                        <li><a href="/#">Privacy Policy</a></li>
+                        <li><a href="/about-us">About us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/terms-of-use">Terms of Use</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div className="copyright">

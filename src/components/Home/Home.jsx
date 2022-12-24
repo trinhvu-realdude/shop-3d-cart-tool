@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CardList from "../CardList/CardList";
+import CardItem from "../CardItem/CardItem";
 import "./Home.css";
 
 function Home() {
@@ -20,8 +20,18 @@ function Home() {
                 <h1 className="heading">Access to Thousands of Wallpaper</h1>
                 <p className="description">Only the best wallpapers. Daily additions of new, awesome, HD wallpapers for desktop and phones.</p>
             </div>
-
-            <CardList list={randomList}/>
+            <div className="tag-collection">
+                {
+                    randomList && randomList.length > 0
+                    ? randomList.map((tagImage, index) => (
+                        <CardItem
+                            key={index} 
+                            tagImage={tagImage}
+                        />
+                    ))
+                    : null
+                }
+            </div>
         </div>
     );
 }

@@ -4,10 +4,23 @@
     margin-top: 90px;
 }
 
-.content-container .content-title {
+.content-container .content-title, .content-container .error {
+    width: 70%;
+    margin: 0 auto;
     text-align: center;
     min-height: 1rem;
     margin-top: -10px;
+}
+
+.content-container .content-title > a {
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid black;
+}
+
+.content-container .content-title > a:hover {
+    color: #4183c4;
+    border-bottom: 1px solid #4183c4;
 }
 
 .content-container .content-title .heading {
@@ -16,4 +29,12 @@
 
 .content-container .content-title .description {
     padding: 0 20px;
+}
+
+.content-container .tag-collection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 25px 0;
+    padding: 0 15px;
 }

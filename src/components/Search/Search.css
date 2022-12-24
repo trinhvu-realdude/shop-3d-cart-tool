@@ -11,7 +11,7 @@
     width: 95%;
 }
 
-.navbar .navbar-menu #search .search-menu > input {
+.navbar .navbar-menu #search .search-menu form > input {
     border: 0;
     font-size: 16px;
     border-radius: .28571429rem;

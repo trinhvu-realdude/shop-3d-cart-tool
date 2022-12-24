@@ -8,3 +8,8 @@
     color: #000;
     font-weight: bold;
 }
+
+.card-item:hover img {
+    opacity: 0.75;
+    transition: .5s ease;
+}

@@ -5,9 +5,13 @@ import {
     BrowserRouter as Router,
 } from 'react-router-dom';
 import './App.css';
+import AboutUs from './components/AboutUs/AboutUs';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
+import ImageScreen from './components/ImageScreen/ImageScreen';
 import NavBar from './components/NavBar/NavBar';
+import History from './components/Search/History';
+import SearchScreen from './components/SearchScreen/SearchScreen';
 import TagScreen from './components/TagScreen/TagScreen';
 
 function App() {
@@ -24,12 +28,15 @@ function App() {
     };
 
     return (
-        <Router>
+        <Router history={History}>
             <React.Fragment>
                 <NavBar/>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
+                    <Route path="/about-us" element={<AboutUs/>}/>
                     <Route path="/cat/:category" element={<TagScreen/>}/>
+                    <Route path="/:category/:tag/:title" element={<ImageScreen/>}/>
+                    <Route path="/search" element={<SearchScreen/>}/>
                 </Routes>
 
                 <Footer/>

@@ -1,5 +1,6 @@
 .navbar {
     position: fixed;
+    z-index: 101;
     top: 0;
     left: 0;
     right: auto;
