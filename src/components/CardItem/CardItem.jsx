@@ -3,10 +3,10 @@ import "./CardItem.css"
 function CardItem(props) {
     return (
         <div className="card-item">
-            <a href={props.tagImage.category + props.tagImage.url + `/${props.tagImage.folderName}`} title={props.tagImage.title}>
+            <a href={props.tag.category + props.tag.url + `/${props.tag.folderName}`} title={props.tag.title}>
                 <img 
-                    src={props.tagImage.thumbSource}
-                    alt={props.tagImage.title} 
+                    src={props.tag.thumbSource}
+                    alt={props.tag.title} 
                     style={{
                         borderRadius: "10px",
                         width: "400px"
@@ -14,7 +14,7 @@ function CardItem(props) {
                 />
                 
                 <div className="card-title">
-                    <span>{props.tagImage.name} </span>
+                    <span>{props.tag.name} </span>
                     <span 
                         className="quantity" 
                         style={{
@@ -23,7 +23,7 @@ function CardItem(props) {
                             fontSize: "14px"
                         }}
                     >
-                        <i className="fa fa-image"></i> {props.tagImage.quantity}
+                        <i className="fa fa-image"></i> {props.tag.quantity}
                     </span>
                 </div>
             </a>

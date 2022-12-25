@@ -40,6 +40,7 @@ function CategoryList() {
                                 
                             </a>
                         </div>
+                        
                     )) : null
                 }
             </div>

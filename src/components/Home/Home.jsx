@@ -23,10 +23,10 @@ function Home() {
             <div className="tag-collection">
                 {
                     randomList && randomList.length > 0
-                    ? randomList.map((tagImage, index) => (
+                    ? randomList.map((tag, index) => (
                         <CardItem
                             key={index} 
-                            tagImage={tagImage}
+                            tag={tag}
                         />
                     ))
                     : null

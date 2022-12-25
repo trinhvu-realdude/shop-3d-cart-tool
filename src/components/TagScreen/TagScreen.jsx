@@ -28,10 +28,10 @@ export default function TagScreen() {
             <div className="tag-collection">
                 {
                     list && list.length > 0
-                    ? list.map((tagImage, index) => (
+                    ? list.map((tag, index) => (
                         <CardItem
                             key={index} 
-                            tagImage={tagImage}
+                            tag={tag}
                         />
                     ))
                     : null
