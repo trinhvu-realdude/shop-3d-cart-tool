@@ -10,7 +10,7 @@ export default function ImageScreen() {
     const [relatedTags, setRelatedTags] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/v1/${tag}/${category}`, {
+        fetch(`https://wallpaper-api.cyclic.app/api/v1/${tag}/${category}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -22,7 +22,7 @@ export default function ImageScreen() {
         .then(response => response.json())
         .then(data => setList(data.results));
 
-        fetch("http://localhost:5000/api/v1/related", {
+        fetch("https://wallpaper-api.cyclic.app/api/v1/related", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

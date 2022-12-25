@@ -7,7 +7,7 @@ function Home() {
     const [randomList, setRandomList] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/v1/random-tags", {
+        fetch("https://wallpaper-api.cyclic.app/api/v1/random-tags", {
             method: "POST"
         })
         .then(response => response.json())

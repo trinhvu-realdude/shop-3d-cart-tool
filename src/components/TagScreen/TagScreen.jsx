@@ -5,14 +5,16 @@ import CardItem from "../CardItem/CardItem";
 export default function TagScreen() {
     let {category} = useParams();
 
-    const title = category.substring(0, 1).toUpperCase() + category.substring(1) + " Wallpapers";
+    category = category.length > 2 ? category.substring(0, 1).toUpperCase() + category.substring(1) : category.toUpperCase();
+
+    const title = category + " Wallpapers";
 
     document.title = title + " - WallpaperParadise";
 
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/v1/tags/${category}`, {
+        fetch(`https://wallpaper-api.cyclic.app/api/v1/tags/${category}`, {
             method: "POST"
         })
         .then(response => response.json())

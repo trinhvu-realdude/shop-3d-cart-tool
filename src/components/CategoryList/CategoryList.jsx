@@ -7,7 +7,7 @@ function CategoryList() {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/v1/categories", {
+        fetch("https://wallpaper-api.cyclic.app/api/v1/categories", {
             method: "POST",
         })
         .then(response => response.json())
