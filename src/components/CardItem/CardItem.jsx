@@ -3,7 +3,7 @@ import "./CardItem.css"
 function CardItem(props) {
     return (
         <div className="card-item">
-            <a href={props.tag.category + props.tag.url + `/${props.tag.folderName}`} title={props.tag.title}>
+            <a href={props.tag.url + `/${props.tag.folderName}` + props.tag.category} title={props.tag.title}>
                 <img 
                     src={props.tag.thumbSource}
                     alt={props.tag.title} 

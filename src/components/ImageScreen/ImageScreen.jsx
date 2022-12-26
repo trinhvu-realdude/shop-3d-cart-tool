@@ -8,6 +8,7 @@ export default function ImageScreen() {
 
     const [list, setList] = useState([]);
     const [relatedTags, setRelatedTags] = useState([]);
+    const [isStopLoading, setIsStopLoading] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/v1/${tag}/${category}`, {
@@ -19,8 +20,14 @@ export default function ImageScreen() {
                 title
             })
         })
-        .then(response => response.json())
-        .then(data => setList(data.results));
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Something went wrong");
+        })
+        .then(data => setList(data.results))
+        .catch(err => console.log(err));
 
         fetch("http://localhost:5000/api/v1/related", {
             method: "POST",
@@ -32,8 +39,16 @@ export default function ImageScreen() {
                 currentTag: title
             })
         })
-        .then(response => response.json())
-        .then(data => setRelatedTags(data.results));
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Something went wrong");
+        })
+        .then(data => setRelatedTags(data.results))
+        .catch(err => console.log(err));
+
+        setTimeout(() => setIsStopLoading(true), 10000);
     }, [category, tag, title]);
 
     return (
@@ -76,7 +91,7 @@ export default function ImageScreen() {
                                     className="card-item" 
                                     key={index}
                                 >
-                                    <a href={tag.category + tag.url + `/${tag.folderName}`} title={tag.title}>
+                                    <a href={tag.url + `/${tag.folderName}` + tag.category} title={tag.title}>
                                         <img 
                                             src={tag.thumbSource}
                                             alt={tag.title} 
@@ -107,24 +122,28 @@ export default function ImageScreen() {
             </div>
         : 
         <div className="content-container">
-            <div className="error">
-                <h1 className="heading" style={{fontSize: "25px"}}>Oops! Something went wrong. 😭</h1>
-                <p>
-                    Sorry, something went wrong there. Please try again or contact us for help.
-                    <br />
-                    <br />
-                    <a 
-                        href="/"
-                        style={{
-                            textDecoration: "none",
-                            fontWeight: "bold",
-                            color: "#4183c4"
-                        }}
-                    >
-                        Back to home &#8594;
-                    </a>
-                </p>
-            </div>
+            {
+                isStopLoading
+                ? <div className="error">
+                    <h1 className="heading" style={{fontSize: "25px"}}>Oops! Something went wrong. 😭</h1>
+                    <p>
+                        Sorry, something went wrong there. Please try again or contact us for help.
+                        <br />
+                        <br />
+                        <a 
+                            href="/"
+                            style={{
+                                textDecoration: "none",
+                                fontWeight: "bold",
+                                color: "#4183c4"
+                            }}
+                        >
+                            Back to home &#8594;
+                        </a>
+                    </p>
+                </div>
+                : <div className="loader"></div>
+            }
         </div>
     );
 }

@@ -7,7 +7,7 @@ export default function ImageItem(props) {
     }
 
     return (
-        <div id={props.image.id} className="image-item" key={props.image.id}>
+        <div id={props.image.id} className="image-item">
             <div className="wrapper" onClick={handlePreview}>
                 <img src={props.image.dataSource} alt={props.image.name} />
                 <div className="image-resolution">
@@ -17,7 +17,7 @@ export default function ImageItem(props) {
             <div className="button-container">
                 <div className="button-share">
                     <div className="fb-share">
-                        <a href={"https://www.facebook.com/sharer.php?u=" + window.location.href + "#" + props.image.id} target="_blank" rel="noreferrer">
+                        <a href={"https://www.facebook.com/sharer.php?u=" + window.location.href.replace("#related", "") + "#" + props.image.id} target="_blank" rel="noreferrer">
                             <i className="fa fa-facebook"></i>
                         </a>
                     </div>

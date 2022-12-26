@@ -35,7 +35,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
                     <Route path="/cat/:category" element={<TagScreen/>}/>
-                    <Route path="/:category/:tag/:title" element={<ImageScreen/>}/>
+                    <Route path="/:tag/:title/:category" element={<ImageScreen/>}/>
                     <Route path="/search" element={<SearchScreen/>}/>
                 </Routes>
 

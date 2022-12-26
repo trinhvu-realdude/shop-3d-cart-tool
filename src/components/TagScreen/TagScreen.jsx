@@ -5,7 +5,9 @@ import CardItem from "../CardItem/CardItem";
 export default function TagScreen() {
     let {category} = useParams();
 
-    const title = category.substring(0, 1).toUpperCase() + category.substring(1) + " Wallpapers";
+    category = category.substring(0, 1).toUpperCase() + category.substring(1);
+
+    const title = category + " Wallpapers";
 
     document.title = title + " - WallpaperParadise";
 
