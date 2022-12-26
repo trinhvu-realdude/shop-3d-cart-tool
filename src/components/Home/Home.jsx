@@ -29,7 +29,7 @@ function Home() {
                             tag={tag}
                         />
                     ))
-                    : null
+                    : <div className="loader"></div>
                 }
             </div>
         </div>

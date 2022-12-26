@@ -36,7 +36,7 @@ export default function TagScreen() {
                             tag={tag}
                         />
                     ))
-                    : null
+                    : <div className="loader"></div>
                 }
             </div>
         </div>
