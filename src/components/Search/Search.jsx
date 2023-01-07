@@ -1,14 +1,18 @@
-import {  useEffect, useState } from "react";
-import History from "./History";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Search.css"
 
 function Search() {
 
-    const[q, setQ] = useState("");
+    const [q, setQ] = useState("");
+    const navigate = useNavigate();
 
     const handleSearch = (e) => {
         e.preventDefault();
-        History.push("/search?q=" + q);
+        navigate({
+            pathname: "/search",
+            search: "?q=" + q
+        });
     }
 
 

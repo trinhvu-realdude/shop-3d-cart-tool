@@ -10,7 +10,6 @@ import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import ImageScreen from './components/ImageScreen/ImageScreen';
 import NavBar from './components/NavBar/NavBar';
-import History from './components/Search/History';
 import SearchScreen from './components/SearchScreen/SearchScreen';
 import TagScreen from './components/TagScreen/TagScreen';
 
@@ -28,7 +27,7 @@ function App() {
     };
 
     return (
-        <Router history={History}>
+        <Router>
             <React.Fragment>
                 <NavBar/>
                 <Routes>

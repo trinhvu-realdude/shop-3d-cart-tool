@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { getTagsByCategory } from "../../api/fetchAPI";
 import CardItem from "../CardItem/CardItem";
 
 export default function TagScreen() {
@@ -14,11 +15,10 @@ export default function TagScreen() {
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/v1/tags/${category}`, {
-            method: "POST"
+        getTagsByCategory(category)
+        .then(data => {
+            setList(data);
         })
-        .then(response => response.json())
-        .then(data => setList(data.results));
     }, [category]);
 
     return (
@@ -36,7 +36,7 @@ export default function TagScreen() {
                             tag={tag}
                         />
                     ))
-                    : null
+                    : <div className="loader"></div>
                 }
             </div>
         </div>
