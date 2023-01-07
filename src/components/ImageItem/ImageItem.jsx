@@ -9,7 +9,9 @@ export default function ImageItem(props) {
     return (
         <div id={props.image.id} className="image-item">
             <div className="wrapper" onClick={handlePreview}>
-                <img src={props.image.dataSource} alt={props.image.name} />
+                <a href={props.image.dataSource} target="_blank" rel="noreferrer">
+                    <img src={props.image.dataSource} alt={props.image.name} />
+                </a>
                 <div className="image-resolution">
                     {props.image.resolution} {props.image.name}
                 </div>

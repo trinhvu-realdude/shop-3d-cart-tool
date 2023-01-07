@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getRandomTags } from "../../api/fetchAPI";
 import CardItem from "../CardItem/CardItem";
 import "./Home.css";
 
@@ -7,11 +8,9 @@ function Home() {
     const [randomList, setRandomList] = useState([]);
 
     useEffect(() => {
-        fetch("https://wallpaper-api.cyclic.app/api/v1/random-tags", {
-            method: "POST"
-        })
-        .then(response => response.json())
-        .then(data => setRandomList(data.results));
+        getRandomTags().then(data => {
+            setRandomList(data);
+        });
     }, []);
 
     return (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getImagesByTag, getRelatedTags } from "../../api/fetchAPI";
 import ImageItem from "../ImageItem/ImageItem";
 
 export default function ImageScreen() {
@@ -11,42 +12,16 @@ export default function ImageScreen() {
     const [isStopLoading, setIsStopLoading] = useState(false);
 
     useEffect(() => {
-        fetch(`https://wallpaper-api.cyclic.app/api/v1/${tag}/${category}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                title
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
+        getImagesByTag(tag, category, title)
+        .then(images => {
+            if (images) {
+                getRelatedTags(category, title)
+                .then(relatedTags => {
+                    setRelatedTags(relatedTags);
+                });
             }
-            throw new Error("Something went wrong");
-        })
-        .then(data => setList(data.results))
-        .catch(err => console.log(err));
-
-        fetch("https://wallpaper-api.cyclic.app/api/v1/related", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                category,
-                currentTag: title
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error("Something went wrong");
-        })
-        .then(data => setRelatedTags(data.results))
-        .catch(err => console.log(err));
+            setList(images);
+        });
 
         setTimeout(() => setIsStopLoading(true), 10000);
     }, [category, tag, title]);

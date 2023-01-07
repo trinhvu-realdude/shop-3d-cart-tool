@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getCategories } from "../../api/fetchAPI";
 import "./CategoryList.css";
 
 function CategoryList() {
@@ -7,11 +8,9 @@ function CategoryList() {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        fetch("https://wallpaper-api.cyclic.app/api/v1/categories", {
-            method: "POST",
-        })
-        .then(response => response.json())
-        .then(data => setCategoryList(data.results));
+        getCategories().then(data => {
+            setCategoryList(data);
+        });
     }, []);
 
     const handleDropDown = () => {
