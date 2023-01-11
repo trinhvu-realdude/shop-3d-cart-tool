@@ -7,7 +7,7 @@
 .content-container .content-title, 
 .content-container .error, 
 .content-container .loader,
-.content-container .about-us {
+.content-container .footer-component {
     width: 70%;
     margin: 0 auto;
     text-align: center;
@@ -42,13 +42,26 @@
     padding: 0 15px;
 }
 
-.content-container .about-us {
+.content-container .footer-component {
     display: flex;
 }
 
-.content-container .about-us div {
+.content-container .footer-component div {
     text-align: left;
     margin: 20px;
+}
+
+.content-container .footer-component .form-contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container .footer-component .form-contact > input, 
+.content-container .footer-component .form-contact > textarea {
+    width: 60%;
+    padding: 10px;
+    margin-bottom: 16px;
+    resize: vertical;
 }
 
 .content-container .loader {

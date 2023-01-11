@@ -5,7 +5,10 @@ import {
     BrowserRouter as Router,
 } from 'react-router-dom';
 import './App.css';
-import AboutUs from './components/AboutUs/AboutUs';
+import AboutUs from './components/Common/AboutUs';
+import Contact from './components/Common/Contact';
+import PrivacyPolicy from './components/Common/PrivacyPolicy';
+import TermOfUse from './components/Common/TermOfUse';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import ImageScreen from './components/ImageScreen/ImageScreen';
@@ -33,6 +36,9 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
+                    <Route path="/contact" element={<Contact/>}/>
+                    <Route path="/terms-of-use" element={<TermOfUse/>}/>
+                    <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
                     <Route path="/cat/:category" element={<TagScreen/>}/>
                     <Route path="/:tag/:title/:category" element={<ImageScreen/>}/>
                     <Route path="/search" element={<SearchScreen/>}/>

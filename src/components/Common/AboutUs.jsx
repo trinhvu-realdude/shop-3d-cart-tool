@@ -7,7 +7,7 @@ export default function AboutUs() {
             <div className="content-title">
                 <h1 className="heading">About WallpaperParadise</h1>
             </div>
-            <div className="about-us">
+            <div className="footer-component">
                 <div>
                     <img src="https://wallpaperaccess.com/wallp.jpg" alt="" />
                 </div>
