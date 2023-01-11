@@ -1,4 +1,5 @@
-import "./Footer.css"
+import "./Footer.css";
+// import hi from "./hi.jpg";
 
 function Footer() {
     return (
@@ -37,7 +38,7 @@ function Footer() {
                 </div>
                 <div className="copyright">
                     <p>
-                        <a href="/">WallpaperParadise</a> © 2022 - Wallpapers are for personal use only.
+                        <a href="/">WallpaperParadise</a> © {new Date().getFullYear()} - Wallpapers are for personal use only.
                     </p>
                 </div>
             </div>
