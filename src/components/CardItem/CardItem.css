@@ -9,7 +9,33 @@
     font-weight: bold;
 }
 
+.card-item > a img {
+    border-radius: 10px;
+    width: 400px;
+}
+
 .card-item:hover img {
     opacity: 0.75;
     transition: .5s ease;
+}
+
+@media only screen and (max-width: 900px) {
+    .card-item > a img {
+        width: 700px;
+    }
+}
+
+@media only screen and (max-width: 912px) {
+    .card-item > a img {
+        width: 700px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .card-item > a img {
+        width: 300px;
+    }
+    .card-title {
+        font-size: 14px;
+    }
 }
