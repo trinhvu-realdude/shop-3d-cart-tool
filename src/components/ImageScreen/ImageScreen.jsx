@@ -70,10 +70,6 @@ export default function ImageScreen() {
                                         <img 
                                             src={tag.thumbSource}
                                             alt={tag.title} 
-                                            style={{
-                                                borderRadius: "10px",
-                                                width: "400px"
-                                            }}
                                         />
                                         <div className="card-title">
                                             <span>{tag.name} </span>

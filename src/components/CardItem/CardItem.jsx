@@ -7,10 +7,6 @@ function CardItem(props) {
                 <img 
                     src={props.tag.thumbSource}
                     alt={props.tag.title} 
-                    style={{
-                        borderRadius: "10px",
-                        width: "400px"
-                    }}
                 />
                 
                 <div className="card-title">

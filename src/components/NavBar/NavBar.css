@@ -27,3 +27,13 @@
 .navbar .navbar-menu .social {
     margin-right: 15px;
 }
+
+@media only screen and (max-width: 600px) {
+    .social {
+        display: none;
+    }
+
+    input::placeholder {
+        color: transparent;
+    }
+}
