@@ -9,6 +9,7 @@ function Result() {
     const [categories, setCategories] = useState([]);
     const [emptyList, setEmptyList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     // handle reload page
     useEffect(() => {
@@ -31,6 +32,9 @@ function Result() {
     useEffect(() => {
         getAllCategories(accessToken, limit).then(data => {
             setCategories(data);
+        }).catch(error => {
+            setError(true);
+            console.error(error);
         })
     }, [accessToken, limit]);
 
@@ -77,44 +81,51 @@ function Result() {
     return (
         <div className="result-container">
             <h2>Empty Categories</h2>
-            {loading ? <p>Loading...</p> : <p>Done!</p>}
-            {emptyList.length > 0 && (
-                <div className="table-container">
-                    <table className="table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>URL</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {emptyList.map((emptyCategory) => (
-                                <tr key={emptyCategory.categoryId}>
-                                    <td>{emptyCategory.categoryId}</td>
-                                    <td>{emptyCategory.categoryName}</td>
-                                    <td>
-                                        <a href={emptyCategory.categoryUrl} target="_blank" rel="noopener noreferrer">
-                                            {emptyCategory.categoryUrl}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            type="button"
-                                            disabled={loading} 
-                                            className="btn btn-danger" 
-                                            onClick={() => handleActionClick(emptyCategory.categoryId)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+            {!error ? (
+                <>
+                    {loading ? <p>Loading...</p> : <p>Done!</p>}
+                    {emptyList.length > 0 && (
+                        <div className="table-container">
+                            <table className="table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>URL</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {emptyList.map((emptyCategory) => (
+                                        <tr key={emptyCategory.categoryId}>
+                                            <td>{emptyCategory.categoryId}</td>
+                                            <td>{emptyCategory.categoryName}</td>
+                                            <td>
+                                                <a href={emptyCategory.categoryUrl} target="_blank" rel="noopener noreferrer">
+                                                    {emptyCategory.categoryUrl}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    type="button"
+                                                    disabled={loading} 
+                                                    className="btn btn-danger" 
+                                                    onClick={() => handleActionClick(emptyCategory.categoryId)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </>
+            ) : 
+            <div>
+                <p style={{color: "red"}}>Something wrong. Please <a href="/">try again.</a></p>
+            </div>}
         </div>
     );
 }
