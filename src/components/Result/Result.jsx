@@ -1,13 +1,12 @@
 import { useLocation } from 'react-router-dom';
-import { getAllCategories, getProducts } from "../../api/fetchAPI"
+import { getAllCategories } from "../../api/fetchAPI"
 import { useEffect, useState } from 'react';
 import "./Result.css"
 
 function Result() {
     const location = useLocation();
-    const { storeUrl, accessToken, limit } = location.state || {};
+    const { storeUrl, accessToken } = location.state || {};
     const [categories, setCategories] = useState([]);
-    const [emptyList, setEmptyList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
@@ -30,49 +29,14 @@ function Result() {
 
     // get all categories
     useEffect(() => {
-        getAllCategories(accessToken, limit).then(data => {
+        getAllCategories(accessToken).then(data => {
             setCategories(data);
+            setLoading(false);
         }).catch(error => {
             setError(true);
             console.error(error);
         })
-    }, [accessToken, limit]);
-
-    const checkSubCategories = async (parentCategory, categories) => {
-        setLoading(true);
-        const subCategories = categories.filter(
-            (cat) => cat.CategoryParent === parentCategory.CategoryID
-        );
-
-        if (subCategories.length === 0) {
-            const products = await getProducts(accessToken, parentCategory.CategoryID);
-
-            if (products.length === 0) {
-                const emptyCategory = {
-                    categoryId: parentCategory.CategoryID,
-                    categoryName: parentCategory.CategoryName,
-                    categoryUrl: `${storeUrl}${parentCategory.CustomFileName}`
-                };
-
-                setEmptyList(prevList => [...prevList, emptyCategory]);
-            }
-        }
-
-        for (const subCategory of subCategories) {
-            await checkSubCategories(subCategory, categories);
-        }
-        setLoading(false);
-    }
-    
-    useEffect(() => {
-        const parentCategories = categories.filter(
-            (cat) => cat.CategoryParent === 0
-        );
-
-        for (const parentCategory of parentCategories) {
-            checkSubCategories(parentCategory, categories);
-        }
-    }, [accessToken, categories]);
+    }, [accessToken]);
 
     const handleActionClick = (categoryId) => {
         console.log(categoryId);
@@ -83,8 +47,8 @@ function Result() {
             <h2>Empty Categories</h2>
             {!error ? (
                 <>
-                    {loading ? <p>Loading...</p> : <p>Done!</p>}
-                    {emptyList.length > 0 && (
+                    {loading && categories.length === 0 ? <p>Loading...</p> : <p>Done! Found ${categories.length} empty categories.</p>}
+                    {categories.length > 0 && (
                         <div className="table-container">
                             <table className="table-bordered">
                                 <thead>
@@ -96,13 +60,13 @@ function Result() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {emptyList.map((emptyCategory) => (
-                                        <tr key={emptyCategory.categoryId}>
-                                            <td>{emptyCategory.categoryId}</td>
-                                            <td>{emptyCategory.categoryName}</td>
+                                    {categories.map((category) => (
+                                        <tr key={category.CategoryID}>
+                                            <td>{category.CategoryID}</td>
+                                            <td>{category.CategoryName}</td>
                                             <td>
-                                                <a href={emptyCategory.categoryUrl} target="_blank" rel="noopener noreferrer">
-                                                    {emptyCategory.categoryUrl}
+                                                <a href={`${storeUrl}${category.CustomFileName}`} target="_blank" rel="noopener noreferrer">
+                                                    {category.CustomFileName}
                                                 </a>
                                             </td>
                                             <td>
@@ -110,7 +74,7 @@ function Result() {
                                                     type="button"
                                                     disabled={loading} 
                                                     className="btn btn-danger" 
-                                                    onClick={() => handleActionClick(emptyCategory.categoryId)}
+                                                    onClick={() => handleActionClick(category.CategoryID)}
                                                 >
                                                     Delete
                                                 </button>

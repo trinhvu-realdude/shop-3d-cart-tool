@@ -15,13 +15,11 @@ function Tool() {
             alert('Store URL and Access Token are required.'); // You can customize this validation message
             return;
         }
-        const limit = e.target.elements.limitInput.value;
 
         navigate("/result", {
             state: {
                 storeUrl,
-                accessToken,
-                limit
+                accessToken
             }
         });
     };
@@ -50,18 +48,6 @@ function Tool() {
                         name="accessTokenInput" 
                         placeholder="Enter Access Token"
                         onChange={(e) => setAccessToken(e.target.value)}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="limitInput">Limit:</label>
-                    <input 
-                        className="form-control" 
-                        type="number" 
-                        name="limitInput" 
-                        id="limitInput" 
-                        defaultValue={100}
-                        min={100}
                     />
                 </div>
 
