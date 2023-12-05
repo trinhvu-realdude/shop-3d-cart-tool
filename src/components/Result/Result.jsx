@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { getAllCategories } from "../../api/fetchAPI"
+import { getAllCategories, getProductsByOffset } from "../../api/fetchAPI"
 import { useEffect, useState } from 'react';
 import "./Result.css"
 
@@ -29,15 +29,58 @@ function Result() {
 
     // get all categories
     useEffect(() => {
-        getAllCategories(accessToken).then(data => {
-            setCategories(data);
-            setLoading(false);
-        }).catch(error => {
-            setError(true);
-            console.error(error);
-        })
+        const fetchData = async () => {
+            try {
+                const allCategories = await getAllCategories(accessToken);
+                const validCategories = await getValidCategories(allCategories, accessToken);
+                setCategories(validCategories);
+                setLoading(false);
+            } catch (error) {
+                setError(true);
+                console.error('An error occurred:', error);
+                setLoading(false);
+            }
+        };
+      
+        fetchData();
     }, [accessToken]);
 
+    const getValidCategories = async (categories, accessToken) => {
+        const validCategoriesList = new Set();
+        let i = 0;
+    
+        while (true) {
+            try {
+                const products = await getProductsByOffset(accessToken, i);
+        
+                products.forEach((product) => {
+                const categoryList = product.CategoryList;
+                    categoryList.forEach((category) => {
+                        validCategoriesList.add(category.CategoryID);
+                    });
+                });
+        
+                i += 200;
+            } catch (error) {
+                if (error.response && error.response.status === 500) {
+                // Handle other errors if needed
+                console.error('An error occurred:', error);
+                break;
+                }
+            }
+        }
+    
+        const emptyCategoryIds = categories
+            .filter((category) => !validCategoriesList.has(category.CategoryID))
+            .map((category) => category.CategoryID);
+    
+        const finalResult = categories.filter((category) => emptyCategoryIds.includes(category.CategoryID));
+    
+        return finalResult;
+    };
+    
+
+    
     const handleActionClick = (categoryId) => {
         console.log(categoryId);
     }
@@ -47,7 +90,7 @@ function Result() {
             <h2>Empty Categories</h2>
             {!error ? (
                 <>
-                    {loading && categories.length === 0 ? <p>Loading...</p> : <p>Done! Found ${categories.length} empty categories.</p>}
+                    {loading ? <p>Loading...</p> : <p>Done! Found {categories.length} empty categories.</p>}
                     {categories.length > 0 && (
                         <div className="table-container">
                             <table className="table-bordered">
