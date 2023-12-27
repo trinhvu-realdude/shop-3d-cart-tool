@@ -3,24 +3,23 @@ import "./Tool.css";
 import { useNavigate } from "react-router-dom";
 
 function Tool() {
-
     const navigate = useNavigate();
-    const [storeUrl, setStoreUrl] = useState('');
-    const [accessToken, setAccessToken] = useState('');
+    const [storeUrl, setStoreUrl] = useState("");
+    const [accessToken, setAccessToken] = useState("");
 
     const handleSubmit = (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
         if (!storeUrl.trim() || !accessToken.trim()) {
-            alert('Store URL and Access Token are required.'); // You can customize this validation message
+            alert("Store URL and Access Token are required.");
             return;
         }
 
         navigate("/result", {
             state: {
                 storeUrl,
-                accessToken
-            }
+                accessToken,
+            },
         });
     };
 
@@ -45,7 +44,7 @@ function Tool() {
                         type="text"
                         className="form-control"
                         id="accessTokenInput"
-                        name="accessTokenInput" 
+                        name="accessTokenInput"
                         placeholder="Enter Access Token"
                         onChange={(e) => setAccessToken(e.target.value)}
                     />
