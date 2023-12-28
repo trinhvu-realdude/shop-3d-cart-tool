@@ -1,5 +1,9 @@
 import { useLocation } from "react-router-dom";
-import { checkProductsInside, getAllCategories } from "../../api/fetchAPI";
+import {
+    checkAll,
+    checkProductsInside,
+    getAllCategories,
+} from "../../api/fetchAPI";
 import { useEffect, useState } from "react";
 import "./Result.css";
 
@@ -10,6 +14,8 @@ function Result() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [numberOfProducts, setNumberOfProducts] = useState({});
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    let [count, setCount] = useState(0);
 
     // handle reload page
     useEffect(() => {
@@ -49,7 +55,7 @@ function Result() {
     const checkProductsInsideClick = async (categoryId) => {
         setNumberOfProducts((prev) => ({
             ...prev,
-            [categoryId]: "Checking products...",
+            [categoryId]: "Checking...",
         }));
 
         const numberOfProducts = await checkProductsInside(
@@ -57,15 +63,102 @@ function Result() {
             categoryId
         );
 
+        if (numberOfProducts > 0) {
+            setCategories((prevCategories) =>
+                prevCategories.filter((c) => c.CategoryID !== categoryId)
+            );
+        }
+
         setNumberOfProducts((prev) => ({
             ...prev,
             [categoryId]: numberOfProducts,
         }));
     };
 
+    // const checkAllClick = async () => {
+    //     for (const category of categories) {
+    //         const categoryId = category.CategoryID;
+
+    //         setNumberOfProducts((prev) => ({
+    //             ...prev,
+    //             [categoryId]: "Checking...",
+    //         }));
+
+    //         const numberOfProducts = await checkProductsInside(
+    //             accessToken,
+    //             categoryId
+    //         );
+
+    //         setNumberOfProducts((prev) => ({
+    //             ...prev,
+    //             [categoryId]: numberOfProducts,
+    //         }));
+
+    //         if (numberOfProducts > 0) {
+    //             setCategories((prevCategories) =>
+    //                 prevCategories.filter((c) => c.CategoryID !== categoryId)
+    //             );
+    //         }
+    //     }
+    // };
+
+    const checkAllClick = async () => {
+        for (const category of selectedCategories) {
+            const categoryId = category.CategoryID;
+
+            setNumberOfProducts((prev) => ({
+                ...prev,
+                [categoryId]: "Checking...",
+            }));
+        }
+
+        const emptyCategories = await checkAll(selectedCategories, accessToken);
+
+        for (const category of emptyCategories) {
+            const categoryId = category.CategoryID;
+
+            if (category.NumberOfProducts > 0) {
+                setCategories((prevCategories) =>
+                    prevCategories.filter((c) => c.CategoryID !== categoryId)
+                );
+            }
+
+            setNumberOfProducts((prev) => ({
+                ...prev,
+                [categoryId]: category.NumberOfProducts,
+            }));
+        }
+
+        setSelectedCategories([]);
+        setCount(0);
+    };
+
     const deleteCategoryClick = (categoryId) => {
         console.log(categoryId);
         alert(`Do you want to delete category ${categoryId}?`);
+    };
+
+    const handleCheckboxChange = (categoryId) => {
+        setSelectedCategories((prevSelected) => {
+            const isSelected = prevSelected.some(
+                (item) => item.CategoryID === categoryId
+            );
+
+            if (isSelected) {
+                // If category is already selected, remove it
+                setCount(--count)
+                return prevSelected.filter(
+                    (item) => item.CategoryID !== categoryId
+                );
+            } else {
+                // If category is not selected, add it to the list
+                setCount(++count);
+                const categoryObject = categories.find(
+                    (category) => category.CategoryID === categoryId
+                );
+                return [...prevSelected, categoryObject];
+            }
+        });
     };
 
     return (
@@ -76,13 +169,27 @@ function Result() {
                     {loading ? (
                         <p>Loading...</p>
                     ) : (
-                        <p>Done! Found {categories.length} empty categories.</p>
+                        <div className="text-center">
+                            <p>
+                                Done! Found {categories.length} empty
+                                categories.
+                            </p>
+                            {count !== 0 ? (
+                                <button
+                                    className="btn btn-success mb-2"
+                                    onClick={() => checkAllClick()}
+                                >
+                                    Check {count}
+                                </button>
+                            ) : null}
+                        </div>
                     )}
                     {categories.length > 0 && (
                         <div className="table-container">
                             <table className="table-bordered">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>URL</th>
@@ -93,6 +200,25 @@ function Result() {
                                 <tbody>
                                     {categories.map((category) => (
                                         <tr key={category.CategoryID}>
+                                            <th>
+                                                <div className="form-check form-check-inline ml-4">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="checkbox"
+                                                        id={`checkbox-${category.CategoryID}`}
+                                                        checked={selectedCategories.some(
+                                                            (selected) =>
+                                                                selected.CategoryID ===
+                                                                category.CategoryID
+                                                        )}
+                                                        onChange={() =>
+                                                            handleCheckboxChange(
+                                                                category.CategoryID
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            </th>
                                             <td>{category.CategoryID}</td>
                                             <td>{category.CategoryName}</td>
                                             <td>

@@ -22,3 +22,14 @@ th, td {
     padding: 8px;
     text-align: center;
 }
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+}
+  
+  /* Adjust the appearance for better visibility (optional) */
+.form-check-input:checked {
+    background-color: #007bff; /* Change to your desired color */
+    border-color: #007bff;
+}
