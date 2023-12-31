@@ -102,7 +102,7 @@ function Result() {
     //     }
     // };
 
-    const checkAllClick = async () => {
+    const checkWithQuantityClick = async () => {
         for (const category of selectedCategories) {
             const categoryId = category.CategoryID;
 
@@ -133,6 +133,36 @@ function Result() {
         setCount(0);
     };
 
+    const checkAllClick = async () => {
+        const filteredCategories = categories.slice(0, 50);
+
+        for (const category of filteredCategories) {
+            const categoryId = category.CategoryID;
+
+            setNumberOfProducts((prev) => ({
+                ...prev,
+                [categoryId]: "Checking...",
+            }));
+        }
+
+        const emptyCategories = await checkAll(filteredCategories, accessToken);
+
+        for (const category of emptyCategories) {
+            const categoryId = category.CategoryID;
+
+            if (category.NumberOfProducts > 0) {
+                setCategories((prevCategories) =>
+                    prevCategories.filter((c) => c.CategoryID !== categoryId)
+                );
+            }
+
+            setNumberOfProducts((prev) => ({
+                ...prev,
+                [categoryId]: category.NumberOfProducts,
+            }));
+        }
+    };
+
     const deleteCategoryClick = (categoryId) => {
         console.log(categoryId);
         alert(`Do you want to delete category ${categoryId}?`);
@@ -145,13 +175,11 @@ function Result() {
             );
 
             if (isSelected) {
-                // If category is already selected, remove it
-                setCount(--count)
+                setCount(--count);
                 return prevSelected.filter(
                     (item) => item.CategoryID !== categoryId
                 );
             } else {
-                // If category is not selected, add it to the list
                 setCount(++count);
                 const categoryObject = categories.find(
                     (category) => category.CategoryID === categoryId
@@ -177,11 +205,17 @@ function Result() {
                             {count !== 0 ? (
                                 <button
                                     className="btn btn-success mb-2"
-                                    onClick={() => checkAllClick()}
+                                    onClick={() => checkWithQuantityClick()}
                                 >
                                     Check {count}
                                 </button>
                             ) : null}
+                            <button
+                                className="btn btn-success ml-2 mb-2"
+                                onClick={() => checkAllClick()}
+                            >
+                                Check 50
+                            </button>
                         </div>
                     )}
                     {categories.length > 0 && (
